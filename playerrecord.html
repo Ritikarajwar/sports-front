@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="" id="form1">
+        <h4>search by name</h4>
+        <input type="text" placeholder="name" id="name">
+        <button id="byname">search</button>
+
+        <div class="shownames"></div>
+
+        <h4>search by aadhar no</h4>
+        <input type="text" placeholder="aadhar no" id="aadhar_no">
+        <button id="by_aadhar_no">search</button>
+    </form>
+    <br>
+    <button id="add_player">
+        add player
+    </button>
+
+    <form action="/uploads" id="form2" enctype="multipart/form-data">
+        <br>
+        <label for="name">name</label>
+        <input type="text" id="newname">
+        <br>
+        <label for="serialno">serialno</label>
+        <input id="serialno">
+        <br>
+        <label for="aadharno">Aadhar number</label>
+        <input type="number" id="aadharno">
+        <br>
+        <label for="age">Age</label>
+        <input type="number" id="age">
+        <br>
+        <label for="game">game</label>
+        <input type="text" id="game">
+        <br>
+        <label for="position">position</label>
+        <select id="position">
+            <option value="1">first</option>
+            <option value="2">second</option>
+            <option value="3">third</option>
+        </select>
+        <br>
+        <label for="tournament">tournament</label>
+        <input type="text" id="tournament">
+        <br>
+        <label for="venue">venue</label>
+        <input type="text" id="venue">
+        <br>
+        <label for="state">state</label>
+        <input type="text" id="state">
+        <br>
+        <label for="organised_at">organised at</label>
+        <input type="text" id="organisedat">
+        <br>
+        <label for="photo">photo</label>
+        <input type="file" id="image" accept="image/*">
+        <br>
+        <button id="submit">
+            submit
+        </button>
+
+    </form>
+    <script>
+        let form1 = document.querySelector('#form1')
+        let name = document.querySelector('#name')
+        let byname = document.querySelector('#byname')
+        let aadhar_no = document.querySelector('#aadhar_no')
+        let by_aadhar_no = document.querySelector('#by_aadhar_no')
+        let div1 = document.querySelector('.shownames')
+
+        let add_player = document.querySelector('#add_player')
+
+        let form2 = document.querySelector('#form2')
+        let newname = document.querySelector('#newname')
+        let serialno = document.querySelector('#serialno')
+        let aadharno = document.querySelector('#aadharno')
+        let age = document.querySelector('#age')
+        let game = document.querySelector('#game')
+        let position = document.querySelector('#position')
+        let tournament = document.querySelector('#tournament')
+        let venue = document.querySelector('#venue')
+        let state = document.querySelector('#state')
+        let organisedat = document.querySelector('#organisedat')
+        let image = document.querySelector('#image')
+        let submit = document.querySelector('#submit')
+
+
+
+
+        byname.onclick = async (e) => {
+
+            e.preventDefault()
+
+            const data = await fetch('http://localhost:8052/playerrecord', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name.value
+                })
+            });
+
+            const result = await data.json()
+            console.log(result)
+            // showdata(result)
+        }
+
+        
+
+        // function showdata(data){
+        //     console.log(data[0].photo.path)
+
+        //     for (let i=0;i<data.length;i++){
+                
+
+        //         if(data[i].photo.path){
+        //             let para = document.createElement('p')
+        //             let image = document.createElement('img')
+        //             image.src = data[i].photo.path
+        //             para.innerHTML = data[i]
+        //             div1.append(image)
+        //             div1.append(para)
+        //         }
+        //         else{
+        //             let para = document.createElement('p')
+        //             para.innerHTML='no data found'
+        //             div1.append(para)
+
+        //         }
+
+                
+        //     }
+        // }
+
+
+
+
+
+        submit.onclick = async (e) => {
+            let add = image.files[0]
+// console.log(add)
+            const formData = new FormData();
+            formData.append('newname', newname.value);
+            formData.append('serialno', serialno.value);
+            formData.append('aadharno', aadharno.value);
+            formData.append('age', age.value);
+            formData.append('game', game.value);
+            formData.append('position', position.value);
+            formData.append('tournament', tournament.value);
+            formData.append('venue', venue.value);
+            formData.append('state', state.value);
+            formData.append('organisedat', organisedat.value);
+            formData.append('image', add);
+
+            // console.log(image.files[0])
+            e.preventDefault()
+            const response = await fetch('http://localhost:8052/newentry', {
+        method: 'POST',
+        body: formData,
+    });
+        }
+
+
+
+    </script>
+</body>
+
+</html>
