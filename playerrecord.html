@@ -99,7 +99,7 @@
 
             e.preventDefault()
 
-            const data = await fetch('http://localhost:8052/playerrecord', {
+            const data = await fetch('https://sport-back.onrender.com/playerrecord', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -163,7 +163,7 @@
 
             // console.log(image.files[0])
             e.preventDefault()
-            const response = await fetch('http://localhost:8052/newentry', {
+            const response = await fetch('https://sport-back.onrender.com/newentry', {
         method: 'POST',
         body: formData,
     });
